@@ -33,26 +33,3 @@ export interface ApiError {
     };
   };
 }
-
-export interface MetaType {
-  isFirstPage: boolean;
-  isLastPage: boolean;
-  currentPage: number;
-  previousPage: null | number;
-  nextPage: null | number;
-  pageCount: number;
-  totalCount: number;
-}
-
-export interface SuccessResponse<T> {
-  statusCode: number;
-  message: string;
-  data: T;
-}
-
-export interface SuccessResponsePagination<T> {
-  statusCode: number;
-  message: string;
-  data: T;
-  meta: MetaType;
-}
