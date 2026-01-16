@@ -2,25 +2,25 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { SignInSchema } from '@/schema/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { SignInBody } from '@/types/auth.types';
-import { SignIn } from '@/service/api/auth/auth.mutation';
 import { toast } from 'react-toastify';
-import { useAuth } from '@/hooks';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { SignInSchema } from '@/schema/auth.schema';
+import { useAuth, useMutation } from '@/hooks';
+import { SignInBody, SignInResponse } from '@/types/auth.types';
 
 function Auth() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { signIn } = useAuth();
 
-  const { mutateAsync, isPending } = SignIn({
+  const { mutationData, isPending } = useMutation<SignInResponse>({
+    endpoint: '/auth/login',
     onSuccess(data) {
       signIn(data);
     },
     onError(error) {
-      toast.error(`Ops something wrong: ${error.response.data.message}`);
+      toast.error(`Ops something wrong: ${error?.response.data.message}`);
     },
   });
 
@@ -33,7 +33,10 @@ function Auth() {
   });
 
   const onSubmit: SubmitHandler<SignInBody> = (formData) => {
-    mutateAsync(formData);
+    mutationData({
+      method: 'POST',
+      payload: formData,
+    });
   };
 
   return (
@@ -89,7 +92,14 @@ function Auth() {
         </form>
       </div>
 
-      <div className="w-1/2 h-full bg-gray-400" />
+      <div className="w-1/2 h-full bg-gray-400 relative">
+        <Image
+          src="/images/ilustration.jpg"
+          alt=""
+          fill
+          style={{ objectFit: 'cover' }}
+        />
+      </div>
     </div>
   );
 }
