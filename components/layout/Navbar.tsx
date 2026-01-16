@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { Logout } from '@mui/icons-material';
 import {
@@ -12,10 +12,8 @@ import { useAuth } from '@/hooks';
 import Avatar from '../elements/Avatar';
 
 function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { signOut } = useAuth();
-
   const isMenuOpen = Boolean(anchorEl);
 
   const handleOnClose = () => {

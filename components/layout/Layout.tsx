@@ -14,7 +14,7 @@ function Layout({ path, children }: LayoutProps) {
 
       <div className="flex flex-row">
         <Sidebar path={path} />
-        <div className="p-6">{children}</div>
+        <div className="p-6 w-full">{children}</div>
       </div>
     </div>
   );
